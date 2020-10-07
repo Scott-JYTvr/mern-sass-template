@@ -1,22 +1,53 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 import Header from './Header';
-const Dashboard = () => <h2>Dashboard</h2>;
-const ProgramNew = () => <h2>ProgramNew</h2>;
-const Landing = () => <h2>Landing</h2>;
+import Landing from './Landing';
+import Dashboard from './Dashboard';
+import ProgramNew from './ProgramNew';
 
-const App = () => {
-	return (
-		<div>
-			<BrowserRouter>
-				<Header />
-				<Route exact path="/" component={Landing} />
-				<Route exact path="/programs" component={Dashboard} />
-				<Route exact path="/programs/new" component={ProgramNew} />
-			</BrowserRouter>
-		</div>
-	);
+class App extends Component {
+	componentDidMount() {
+		this.props.fetchUser();
+	}
+
+	requireAuth(component) {
+		switch (this.props.auth) {
+			case null:
+				return;
+			case false:
+				return Landing;
+			default:
+				return component;
+		}
+	}
+
+	render() {
+		return (
+			<div className="container">
+				<BrowserRouter>
+					<Header />
+					<Route exact path="/" component={Landing} />
+					<Route
+						exact
+						path="/programs"
+						component={this.requireAuth(Dashboard)}
+					/>
+					<Route
+						exact
+						path="/programs/new"
+						component={this.requireAuth(ProgramNew)}
+					/>
+				</BrowserRouter>
+			</div>
+		);
+	}
+}
+
+const mapStateToProps = ({ auth }) => {
+	return { auth };
 };
 
-export default App;
+export default connect(mapStateToProps, actions)(App);

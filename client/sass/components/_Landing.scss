@@ -1,0 +1,46 @@
+.landing {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba($color-white, 0.75);
+	box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+	border-radius: $border-radius-main;
+
+	&__text-box {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		margin: 3rem;
+	}
+
+	&__btn {
+		&,
+		&:link,
+		&:visited {
+			text-transform: uppercase;
+			text-decoration: none;
+			padding: 1.5rem 4rem;
+			border-radius: $border-radius-round;
+			transition: all 0.2s;
+			font-size: $default-font-size;
+			background-color: $color-grey-dark-2;
+			color: $color-white;
+
+			border: none;
+			cursor: pointer;
+
+			&:hover {
+				transform: translateY(-0.3rem);
+				box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+			}
+
+			&:active,
+			&:focus {
+				outline: none;
+				transform: translateY(-1px);
+				box-shadow: 0 0.5rem 1rem rgba($color-black, 0.2);
+			}
+		}
+	}
+}
